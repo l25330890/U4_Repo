@@ -21,9 +21,27 @@ def interpolacion_lineal(x0, y0, x1, y1, x, x2=None, y2=None):
     x2, y2 son OPCIONALES: puedes terminar el método sin usarlos y, cuando
     escribas ``error_estimado_interpolacion``, regresar aquí y activarlos.
     """
+    y = y0 + ((y1 - y0) / (x1 - x0)) * (x - x0)
+
+    """Estima el error de interpolación lineal usando un tercer nodo (x2, y2).
+
+    Fórmula: R1 = f[x2, x1, x0] * (x - x0) * (x - x1)
+    """
+    # Primeras diferencias divididas
+    f_x1_x0 = (y1 - y0) / (x1 - x0)
+    f_x2_x1 = (y2 - y1) / (x2 - x1)
+
+    # Segunda diferencia dividida f[x2, x1, x0]
+    f_x2_x1_x0 = (f_x2_x1 - f_x1_x0) / (x2 - x0)
+
+    # Error estimado R1
+    error = f_x2_x1_x0 * (x - x0) * (x - x1)
+
+    return y, error
     # error = None
     # return y, error
-    raise NotImplementedError("Completa interpolacion_lineal")
+    
+    
 
 
 if __name__ == "__main__":
